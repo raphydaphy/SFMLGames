@@ -62,17 +62,17 @@ void vex::lcd::render()
 	window->display();
 }
 
-vex::color::color(sf::Color underlying) : underlying(underlying)
+vex::color::color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255) : underlying(sf::Color(r, g, b, a))
 {
 
 }
 
-const vex::color vex::color::black(sf::Color::Black);
-const vex::color vex::color::white(sf::Color::White);
-const vex::color vex::color::red(sf::Color::Red);
-const vex::color vex::color::green(sf::Color::Green);
-const vex::color vex::color::blue(sf::Color::Blue);
-const vex::color vex::color::yellow(sf::Color::Yellow);
-const vex::color vex::color::magenta(sf::Color::Magenta);
-const vex::color vex::color::cyan(sf::Color::Cyan);
-const vex::color vex::color::transparent(sf::Color::Transparent);
+const vex::color vex::color::black(0, 0, 0);
+const vex::color vex::color::white(255, 255, 255);
+const vex::color vex::color::red(255, 0, 0);
+const vex::color vex::color::green(0, 255, 0);
+const vex::color vex::color::blue(0, 0, 255);
+const vex::color vex::color::yellow(255, 255, 0);
+const vex::color vex::color::magenta(255, 0, 255);
+const vex::color vex::color::cyan(0, 255, 255);
+const vex::color vex::color::transparent(0, 0, 0, 0);

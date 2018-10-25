@@ -11,7 +11,7 @@ namespace vex
 	class color
 	{
 	public:
-		color(sf::Color underlying);
+		color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 		const sf::Color underlying;
 		static const color black;
 		static const color white;
