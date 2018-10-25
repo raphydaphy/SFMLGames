@@ -6,15 +6,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES main.cpp)
 add_executable(SFMLGames ${SOURCE_FILES})
 
-# SFML
-set(SFML_DIR "${PROJECT_SOURCE_DIR}/SFML")
-set(SFML_ROOT ${SFML_DIR})
-set(CMAKE_MODULE_PATH "${SFML_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
-find_package(SFML REQUIRED system window graphics network audio)
-
-if(SFML_FOUND)
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})
-else()
-    message("Did not find SFML! Try running `git submodule update --init`")
-endif()
+add_subdirectory(SFML)
+find_package(SFML COMPONENTS graphics window system)
+target_link_libraries(SFMLGames sfml-graphics sfml-window sfml-system)
