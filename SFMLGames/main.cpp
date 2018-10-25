@@ -1,35 +1,24 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "robot_config.h"
+
+#ifndef VEX_SIMULATOR_MODE
+#else
+#endif
 
 int main()
 {
-	sf::Window window(sf::VideoMode(1080, 720, sf::Style::Default), "SFML Games");
-	window.setVerticalSyncEnabled(true);
-	window.setTitle("Snake");
-	
-	while (window.isOpen())
+	#ifdef VEX_SIMULATOR_MODE
+	vex::brain Brain;
+	#else
+	#define ACTIVE true
+	#endif
+
+	while (ACTIVE)
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Escape)
-				{
-					window.close();
-				}
-				break;
-			case sf::Event::JoystickButtonPressed:
-				std::cout << "Joystick Button: " << event.joystickButton.button << std::endl;
-				break;
-			default:
-				break;
-			}
-		}
+		Brain.Screen.clearScreen(vex::color::red);
+		Brain.Screen.drawRectangle(3, 3, 100, 100, vex::color::blue);
+
+		// Swaps the buffers (ends the frame)
+		Brain.Screen.render();
 	}
 
 	return 0;
