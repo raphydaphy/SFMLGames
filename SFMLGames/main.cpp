@@ -1,24 +1,35 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "Snake");
-
-	sf::CircleShape shape(300.f, 10000);
-	shape.setFillColor(sf::Color::Green);
-
+	sf::Window window(sf::VideoMode(1080, 720, sf::Style::Default), "SFML Games");
+	window.setVerticalSyncEnabled(true);
+	window.setTitle("Snake");
+	
 	while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
+			{
+			case sf::Event::Closed:
 				window.close();
+				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					window.close();
+				}
+				break;
+			case sf::Event::JoystickButtonPressed:
+				std::cout << "Joystick Button: " << event.joystickButton.button << std::endl;
+				break;
+			default:
+				break;
+			}
 		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
 	}
 
 	return 0;
