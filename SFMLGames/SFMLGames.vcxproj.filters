@@ -21,12 +21,18 @@
     <ClCompile Include="vex_sim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vex_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="robot_config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vex_sim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vex_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

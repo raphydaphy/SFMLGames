@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "vex_types.h"
 
 #define VEX_SIMULATOR_MODE true
 #define ACTIVE Brain.Screen.update()
@@ -8,22 +9,6 @@ void pollEvents(sf::Window* window);
 
 namespace vex
 {
-	class color
-	{
-	public:
-		color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-		const sf::Color underlying;
-		static const color black;
-		static const color white;
-		static const color red;
-		static const color green;
-		static const color blue;
-		static const color yellow;
-		static const color magenta;
-		static const color cyan;
-		static const color transparent;
-	};
-
 	class lcd
 	{
 	private:

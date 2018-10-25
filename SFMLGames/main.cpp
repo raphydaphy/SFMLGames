@@ -14,8 +14,8 @@ int main()
 
 	while (ACTIVE)
 	{
-		Brain.Screen.clearScreen(vex::color::red);
-		Brain.Screen.drawRectangle(3, 3, 100, 100, vex::color::blue);
+		Brain.Screen.clearScreen(vex::color::orange);
+		Brain.Screen.drawRectangle(3, 3, 100, 100, vex::color::purple);
 
 		// Swaps the buffers (ends the frame)
 		Brain.Screen.render();
