@@ -129,11 +129,13 @@ private:
 
 Direction dir = Direction::right();
 std::vector<Direction> moves;
+bool dead = false;
 
 namespace ctrl
 {
 	void left()
 	{
+		if (dead) return;
 		if (moves.empty() && dir == Direction::right())
 			return;
 		else if (!moves.empty() && moves.front() == Direction::right())
@@ -143,6 +145,7 @@ namespace ctrl
 
 	void right()
 	{
+		if (dead) return;
 		if (moves.empty() && dir == Direction::left())
 			return;
 		else if (!moves.empty() && moves.front() == Direction::left())
@@ -152,6 +155,7 @@ namespace ctrl
 
 	void up()
 	{
+		if (dead) return;
 		if (moves.empty() && dir == Direction::down())
 			return;
 		else if (!moves.empty() && moves.front() == Direction::down())
@@ -161,6 +165,11 @@ namespace ctrl
 
 	void down()
 	{
+		if (dead)
+		{
+			dead = false;
+			return;
+		}
 		if (moves.empty() && dir == Direction::up())
 			return;
 		else if (!moves.empty() && moves.front() == Direction::up())
@@ -169,24 +178,8 @@ namespace ctrl
 	}
 }
 
-int main()
+void play(vex::brain Brain, vex::controller Controller)
 {
-	#ifdef VEX_SIMULATOR_MODE
-
-		// -- SIMULATOR INIT --
-		vex::controller Controller;
-		vex::brain Brain;
-
-	#else
-		#define ACTIVE true
-	#endif
-
-	Controller.ButtonX.pressed(ctrl::left);
-	Controller.ButtonB.pressed(ctrl::right);
-	Controller.ButtonY.pressed(ctrl::up);
-	Controller.ButtonA.pressed(ctrl::down);
-
-	bool dead = false;
 	Snake snake(5, 5);
 
 	while (!dead)
@@ -215,6 +208,9 @@ int main()
 		}
 	}
 
+	moves.clear();
+	dir = Direction::right();
+
 	while (ACTIVE)
 	{
 		Brain.Screen.clearScreen(vex::color::red);
@@ -223,7 +219,32 @@ int main()
 		snake.render(Brain);
 
 		Brain.Screen.printAt(10, 10, "You Died!! Score: " + snake.size());
+		Brain.Screen.printAt(10, 20, "Press A to Restart");
 
 		Brain.Screen.render();
+
+		if (!dead)
+		{
+			play(Brain, Controller);
+		}
 	}
+}
+int main()
+{
+	#ifdef VEX_SIMULATOR_MODE
+
+		// -- SIMULATOR INIT --
+		vex::controller Controller;
+		vex::brain Brain;
+
+	#else
+		#define ACTIVE true
+	#endif
+
+	Controller.ButtonX.pressed(ctrl::left);
+	Controller.ButtonB.pressed(ctrl::right);
+	Controller.ButtonY.pressed(ctrl::up);
+	Controller.ButtonA.pressed(ctrl::down);
+
+	play(Brain, Controller);
 }
