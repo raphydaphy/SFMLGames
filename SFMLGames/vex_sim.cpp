@@ -1,6 +1,6 @@
 #include "vex_sim.h"
-#include <iostream>
 #include <thread>
+#include <iostream>
 
 const float SIM_SCALE = 2;
 
@@ -75,14 +75,7 @@ bool vex::lcd::update(vex::controller Controller)
 				break;
 			case sf::Event::JoystickButtonPressed:
 				if (Controller.joystickButtonCallback != nullptr)
-				{
-					std::cout << " pres buton " << std::endl;
 					Controller.joystickButtonCallback(Controller, event);
-				}
-				else
-				{
-					std::cout << "null fella" << std::endl;
-				}
 				break;
 			case sf::Event::JoystickMoved:
 				if (Controller.joystickAxisCallback != nullptr)

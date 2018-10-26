@@ -99,7 +99,7 @@ public:
 			if (head == food)
 			{
 				food = Pos(std::rand() % (WIDTH - 2) + 2, std::rand() % (HEIGHT - 2) + 2);
-				grow(std::rand() % 5 + 3);
+				grow(std::rand() % 3 + 1);
 			}
 			return true;
 		}
