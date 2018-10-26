@@ -8,6 +8,7 @@ int main()
 {
 	#ifdef VEX_SIMULATOR_MODE
 	vex::brain Brain;
+	vex::controller Controller;
 	#else
 	#define ACTIVE true
 	#endif
