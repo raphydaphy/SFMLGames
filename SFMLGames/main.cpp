@@ -3,6 +3,8 @@
 #include <algorithm>
 
 const int PIECE_SIZE = 10;
+const int WIDTH = 36;
+const int HEIGHT = 23;
 
 class Pos
 {
@@ -36,6 +38,11 @@ bool operator==(const Pos& a, const Pos& b)
 	return a.x == b.x && a.y == b.y;
 }
 
+bool operator!=(const Pos& a, const Pos& b)
+{
+	return a.x != b.x || a.y != b.y;
+}
+
 class Direction : public Pos
 {
 private:
@@ -59,7 +66,7 @@ public:
 	}
 };
 
-Pos food(std::rand() % 40 + 1, std::rand() % 20 + 1);
+Pos food(std::rand() % (WIDTH - 2) + 2, std::rand() % (HEIGHT - 2) + 2);
 
 class Snake
 {
@@ -67,27 +74,31 @@ public:
 	Snake(int x, int y)
 	{
 		body.emplace_back(x, y);
+		body.emplace_back(x - 1, y);
 	}
 	bool move(Direction dir)
 	{
 		if (growth > 0)
 		{
-			std::cout << growth << std::endl;
 			growth--;
 		}
 		else {
-			std::cout << "decr" << std::endl;
 			body.erase(std::prev(body.end()));
 		}
 
 		Pos head = dir + (body.front());
-		if (std::find(body.begin(), body.end(), dir) == body.end())
+
+		if (head.x <= 0 || head.y <= 0)
+		{
+			return false;
+		}
+		if (std::find(body.begin(), body.end(), head) == body.end())
 		{
 			body.insert(body.begin(), head);
 
 			if (head == food)
 			{
-				food = Pos(std::rand() % 40 + 1, std::rand() % 20 + 1);
+				food = Pos(std::rand() % (WIDTH - 2) + 2, std::rand() % (HEIGHT - 2) + 2);
 				grow(std::rand() % 5 + 3);
 			}
 			return true;
@@ -116,27 +127,44 @@ private:
 	int growth = 0;
 };
 
+Direction dir = Direction::right();
 std::vector<Direction> moves;
 
 namespace ctrl
 {
 	void left()
 	{
+		if (moves.empty() && dir == Direction::right())
+			return;
+		else if (!moves.empty() && moves.front() == Direction::right())
+			return;
 		moves.push_back(Direction::left());
 	}
 
 	void right()
 	{
+		if (moves.empty() && dir == Direction::left())
+			return;
+		else if (!moves.empty() && moves.front() == Direction::left())
+			return;
 		moves.push_back(Direction::right());
 	}
 
 	void up()
 	{
+		if (moves.empty() && dir == Direction::down())
+			return;
+		else if (!moves.empty() && moves.front() == Direction::down())
+			return;
 		moves.push_back(Direction::up());
 	}
 
 	void down()
 	{
+		if (moves.empty() && dir == Direction::up())
+			return;
+		else if (!moves.empty() && moves.front() == Direction::up())
+			return;
 		moves.push_back(Direction::down());
 	}
 }
@@ -150,24 +178,21 @@ int main()
 		vex::brain Brain;
 
 	#else
-	#define ACTIVE true
+		#define ACTIVE true
 	#endif
 
-	Controller.ButtonLeft.pressed(ctrl::left);
-	Controller.ButtonRight.pressed(ctrl::right);
-	Controller.ButtonUp.pressed(ctrl::up);
-	Controller.ButtonDown.pressed(ctrl::down);
+	Controller.ButtonX.pressed(ctrl::left);
+	Controller.ButtonB.pressed(ctrl::right);
+	Controller.ButtonY.pressed(ctrl::up);
+	Controller.ButtonA.pressed(ctrl::down);
 
 	bool dead = false;
-
-	Direction dir = Direction::right();
 	Snake snake(5, 5);
 
-	snake.grow(1000);
-
-	while (ACTIVE)
+	while (!dead)
 	{
 		Brain.Screen.clearScreen(vex::color::black);
+		Brain.Screen.drawRectangle(food.x * 10, food.y * 10, 10, 10, vex::color::blue);
 		snake.render(Brain);
 
 		if (!moves.empty())
@@ -181,13 +206,24 @@ int main()
 			dead = true;
 		}
 
-		vex::task::sleep(150);
+		vex::task::sleep(100);
+		Brain.Screen.render();
+
+		if (!ACTIVE)
+		{
+			dead = true;
+		}
 	}
 
-	Brain.Screen.clearScreen(vex::color::red);
+	while (ACTIVE)
+	{
+		Brain.Screen.clearScreen(vex::color::red);
 
-	Brain.Screen.drawRectangle(food.x * 10, food.y * 10, 10, 10, vex::color::blue);
-	snake.render(Brain);
+		Brain.Screen.drawRectangle(food.x * 10, food.y * 10, 10, 10, vex::color::blue);
+		snake.render(Brain);
 
-	Brain.Screen.printAt(10, 10, "You Died!! Score: " + snake.size());
+		Brain.Screen.printAt(10, 10, "You Died!! Score: " + snake.size());
+
+		Brain.Screen.render();
+	}
 }
