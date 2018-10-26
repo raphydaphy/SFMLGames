@@ -137,11 +137,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="vex_sim.cpp" />
+    <ClCompile Include="vex_submodules.cpp" />
     <ClCompile Include="vex_types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="robot_config.h" />
     <ClInclude Include="vex_sim.h" />
+    <ClInclude Include="vex_submodules.h" />
     <ClInclude Include="vex_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
