@@ -15,7 +15,7 @@ namespace vex
 	class button
 	{
 	public:
-		void pressed(void(*callback(void)));
+		void pressed(void(*callback)(void));
 		void released(void(*callback(void)));
 		bool pressing();
 	};
@@ -24,7 +24,7 @@ namespace vex
 	private:
 		sf::RenderWindow *window = nullptr;
 	public:
-		lcd();
+		lcd(int x, int y, int width, int height, const char *title);
 		bool update();
 		// -- VEX SIM END --
 

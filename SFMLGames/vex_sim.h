@@ -28,6 +28,7 @@ namespace vex
 	class brain
 	{
 	public:
+		brain();
 		void resetTimer();
 		void setTimer(double value, timeUnits units);
 		double timer(timeUnits units);
@@ -59,22 +60,23 @@ namespace vex
 	class controller
 	{
 	public:
-		vex::button & ButtonL1;
-		vex::button& ButtonL2;
-		vex::button& ButtonR1;
-		vex::button& ButtonR2;
-		vex::button& ButtonUp;
-		vex::button& ButtonDown;
-		vex::button& ButtonLeft;
-		vex::button& ButtonRight;
-		vex::button& ButtonX;
-		vex::button& ButtonB;
-		vex::button& ButtonY;
-		vex::button& ButtonA;
-		vex::axis& Axis1;
-		vex::axis& Axis2;
-		vex::axis& Axis3;
-		vex::axis& Axis4;
+		controller();
+		vex::button ButtonL1;
+		vex::button ButtonL2;
+		vex::button ButtonR1;
+		vex::button ButtonR2;
+		vex::button ButtonUp;
+		vex::button ButtonDown;
+		vex::button ButtonLeft;
+		vex::button ButtonRight;
+		vex::button ButtonX;
+		vex::button ButtonB;
+		vex::button ButtonY;
+		vex::button ButtonA;
+		vex::axis Axis1;
+		vex::axis Axis2;
+		vex::axis Axis3;
+		vex::axis Axis4;
 		void rumble(const char *str);
 		vex::lcd Screen;
 	};

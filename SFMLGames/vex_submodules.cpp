@@ -29,11 +29,11 @@ void pollEvents(sf::Window *window)
 
 }
 
-vex::lcd::lcd()
+vex::lcd::lcd(int x, int y, int width, int height, const char* title)
 {
-	window = new sf::RenderWindow(sf::VideoMode(1080, 720), "Vex Simulator");
+	window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+	window->setPosition(sf::Vector2i(x, y));
 	window->setVerticalSyncEnabled(true);
-	window->setTitle("Snake");
 }
 
 void vex::lcd::drawRectangle(int x, int y, int width, int height, const vex::color &color)
@@ -62,4 +62,14 @@ void vex::lcd::clearScreen(const vex::color &color)
 void vex::lcd::render()
 {
 	window->display();
+}
+
+void vex::lcd::printAt(int32_t x, int32_t y, const char *format, ...)
+{
+
+}
+
+void vex::button::pressed(void(*callback)(void))
+{
+
 }
