@@ -1,4 +1,4 @@
-#include "robot_config.h"
+#include "robot-config.h"
 #include <vector>
 #include <algorithm>
 
@@ -88,7 +88,7 @@ public:
 
 		Pos head = dir + (body.front());
 
-		if (head.x <= 0 || head.y <= 0)
+		if (head.x < 0 || head.y < 0 || head.x > WIDTH || head.y > HEIGHT)
 		{
 			return false;
 		}

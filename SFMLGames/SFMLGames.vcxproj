@@ -140,7 +140,7 @@
     <ClCompile Include="vex_types.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="robot_config.h" />
+    <ClInclude Include="robot-config.h" />
     <ClInclude Include="vex_sim.h" />
     <ClInclude Include="vex_types.h" />
   </ItemGroup>
